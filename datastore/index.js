@@ -11,8 +11,18 @@ exports.create = (text, callback) => {
 
   counter.getNextUniqueId(function(extra, idVar) {
     id = idVar;
+    console.log(id);
 
-    console.log("id", id);
+    let fileName = `${id}.txt`;
+    let fullPath = path.join(__dirname, 'data', fileName);
+  
+    fs.writeFile(fullPath, text, (err) => {
+      if (err) {
+        console.log('Write File Error');
+      } else {
+        console.log('This file has been saved');
+      }
+    });
   });
 
 

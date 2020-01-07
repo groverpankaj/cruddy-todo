@@ -41,7 +41,7 @@ const writeCounter = (count, callback) => {
 
 
 
-exports.getNextUniqueId = (aa) => {
+exports.getNextUniqueId = (callbackForNextId) => {
   readCounter( (something, result) => {
     if (result === 0) {
       counter = 0;
@@ -52,10 +52,9 @@ exports.getNextUniqueId = (aa) => {
     counter++;
 
 
-    writeCounter(counter, aa);
+    writeCounter(counter, callbackForNextId);
 
 
-    console.log('----------', counter, '-----');
   });
 
 
