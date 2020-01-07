@@ -14,21 +14,22 @@ exports.create = (text, callback) => {
     console.log(id);
 
     let fileName = `${id}.txt`;
-    let fullPath = path.join(__dirname, 'data', fileName);
-  
+    let fullPath = path.join(exports.dataDir , fileName);
+
     fs.writeFile(fullPath, text, (err) => {
       if (err) {
         console.log('Write File Error');
       } else {
         console.log('This file has been saved');
+        callback(null, { id, text });
       }
     });
   });
 
 
   //var id = counter.getNextUniqueId();
-  items[id] = text;
-  callback(null, { id, text });
+  // items[id] = text;
+
 };
 
 
