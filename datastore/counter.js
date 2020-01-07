@@ -41,23 +41,28 @@ const writeCounter = (count, callback) => {
 
 
 
-exports.getNextUniqueId = () => {
- readCounter( (something, result) => {
-    if(result === 0) {
+exports.getNextUniqueId = (aa) => {
+  readCounter( (something, result) => {
+    if (result === 0) {
       counter = 0;
     } else {
       counter = result;
     }
+    // Increment the counter
     counter++;
-    writeCounter(counter, () => {} );
-    console.log('----------' , counter, '-----');
+
+
+    writeCounter(counter, aa);
+
+
+    console.log('----------', counter, '-----');
   });
 
 
 
 
 
-  return zeroPaddedNumber(counter);
+  // return zeroPaddedNumber(counter);
 };
 
 
