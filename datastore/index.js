@@ -25,8 +25,7 @@ exports.create = (text, callback) => {
     });
   });
 
-  //var id = counter.getNextUniqueId();
-  // items[id] = text;
+
 };
 
 
@@ -51,33 +50,58 @@ exports.readOne = (id, callback) => {
 
   let fileName = `${id}.txt`;
   let fullPath = path.join(exports.dataDir, fileName);
+
   fs.readFile(fullPath, (err, data) => {
 
     if (err) {
       console.log('error');
-      // callback(new Error(`No item with id: ${id}`));
       callback(new Error(`No item with id: ${id}`));
     } else {
       callback(null, { id, text: data.toString() });
     }
   });
 
-  // var text = items[id];
-  // if (!text) {
-  //   callback(new Error(`No item with id: ${id}`));
-  // } else {
-  //   callback(null, { id, text });
-  // }
 };
 
 exports.update = (id, text, callback) => {
-  var item = items[id];
-  if (!item) {
-    callback(new Error(`No item with id: ${id}`));
-  } else {
-    items[id] = text;
-    callback(null, { id, text });
-  }
+
+  let fileName = `${id}.txt`;
+  let fullPath = path.join(exports.dataDir, fileName);
+  fs.readFile(fullPath, (err, data) => {
+    if (err) {
+      callback(new Error(`No item with id: ${id}`));
+    } else {
+      fs.writeFile(fullPath, text, (err) => {
+        if (err) {
+          callback(new Error(`No item with id: ${id}`));
+        } else {
+          callback(null, { id, text});
+        }
+      });
+    }
+  });
+
+
+  // fs.writeFile(fullPath, text, (err) => {
+
+  //   if (err) {
+  //     callback(new Error(`No item with id: ${id}`));
+  //   } else {
+  //     console.log('Success in updating file');
+  //     callback(null, { id, text });
+  //   }
+  // });
+
+
+
+
+  // var item = items[id];
+  // if (!item) {
+  //   callback(new Error(`No item with id: ${id}`));
+  // } else {
+  //   items[id] = text;
+  //   callback(null, { id, text });
+  // }
 };
 
 exports.delete = (id, callback) => {
