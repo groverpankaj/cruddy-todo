@@ -44,9 +44,9 @@ const writeCounter = (count, callback) => {
 exports.getNextUniqueId = (callbackForNextId) => {
   readCounter( (something, result) => {
     if (result === 0) {
-      counter = 0;
+      var counter = 0;
     } else {
-      counter = result;
+      var counter = result;
     }
     // Increment the counter
     counter++;

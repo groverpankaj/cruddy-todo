@@ -82,37 +82,27 @@ exports.update = (id, text, callback) => {
   });
 
 
-  // fs.writeFile(fullPath, text, (err) => {
-
-  //   if (err) {
-  //     callback(new Error(`No item with id: ${id}`));
-  //   } else {
-  //     console.log('Success in updating file');
-  //     callback(null, { id, text });
-  //   }
-  // });
-
-
-
-
-  // var item = items[id];
-  // if (!item) {
-  //   callback(new Error(`No item with id: ${id}`));
-  // } else {
-  //   items[id] = text;
-  //   callback(null, { id, text });
-  // }
 };
 
 exports.delete = (id, callback) => {
-  var item = items[id];
-  delete items[id];
-  if (!item) {
-    // report an error if item not found
-    callback(new Error(`No item with id: ${id}`));
-  } else {
-    callback();
-  }
+
+  let fileName = `${id}.txt`;
+  let fullPath = path.join(exports.dataDir, fileName);
+
+  fs.readFile(fullPath, (err, data) => {
+    if (err) {
+      callback(new Error(`No item with id: ${id}`));
+    } else {
+      fs.unlink(fullPath, (err, data) => {
+        if (err) {
+          callback(new Error(`No item with id: ${id}`));
+        } else {
+          callback();
+        }
+      });
+    }
+  });
+
 };
 
 // Config+Initialization code -- DO NOT MODIFY /////////////////////////////////
