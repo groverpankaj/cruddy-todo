@@ -11,10 +11,9 @@ exports.create = (text, callback) => {
 
   counter.getNextUniqueId(function(extra, idVar) {
     id = idVar;
-    console.log(id);
 
     let fileName = `${id}.txt`;
-    let fullPath = path.join(exports.dataDir , fileName);
+    let fullPath = path.join(exports.dataDir, fileName);
 
     fs.writeFile(fullPath, text, (err) => {
       if (err) {
@@ -26,11 +25,9 @@ exports.create = (text, callback) => {
     });
   });
 
-
   //var id = counter.getNextUniqueId();
   // items[id] = text;
 };
-
 
 
 
@@ -45,19 +42,32 @@ exports.readAll = (callback) => {
       var data = _.map(items, (text, id) => {
         return ( {id: text.slice(0, 5), text: text.slice(0, 5) });
       });
-      console.log(data);
       callback(null, data);
     }
   });
 };
 
 exports.readOne = (id, callback) => {
-  var text = items[id];
-  if (!text) {
-    callback(new Error(`No item with id: ${id}`));
-  } else {
-    callback(null, { id, text });
-  }
+
+  let fileName = `${id}.txt`;
+  let fullPath = path.join(exports.dataDir, fileName);
+  fs.readFile(fullPath, (err, data) => {
+
+    if (err) {
+      console.log('error');
+      // callback(new Error(`No item with id: ${id}`));
+      callback(new Error(`No item with id: ${id}`));
+    } else {
+      callback(null, { id, text: data.toString() });
+    }
+  });
+
+  // var text = items[id];
+  // if (!text) {
+  //   callback(new Error(`No item with id: ${id}`));
+  // } else {
+  //   callback(null, { id, text });
+  // }
 };
 
 exports.update = (id, text, callback) => {
