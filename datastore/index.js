@@ -29,22 +29,26 @@ exports.create = (text, callback) => {
 
   //var id = counter.getNextUniqueId();
   // items[id] = text;
-
 };
 
 
 
 
 
-
-
-
-
 exports.readAll = (callback) => {
-  var data = _.map(items, (text, id) => {
-    return { id, text };
+
+
+  fs.readdir(exports.dataDir, (err, items) => {
+    if (err) {
+      console.log('Found error reading dir');
+    } else {
+      var data = _.map(items, (text, id) => {
+        return ( {id: text.slice(0, 5), text: text.slice(0, 5) });
+      });
+      console.log(data);
+      callback(null, data);
+    }
   });
-  callback(null, data);
 };
 
 exports.readOne = (id, callback) => {
