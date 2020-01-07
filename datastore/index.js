@@ -9,8 +9,8 @@ var items = {};
 
 exports.create = (text, callback) => {
 
-  counter.getNextUniqueId(function(extra, idVar) {
-    id = idVar;
+  counter.getNextUniqueId(function (extra, idVar) {
+    var id = idVar;
 
     let fileName = `${id}.txt`;
     let fullPath = path.join(exports.dataDir, fileName);
@@ -39,7 +39,7 @@ exports.readAll = (callback) => {
       console.log('Found error reading dir');
     } else {
       var data = _.map(items, (text, id) => {
-        return ( {id: text.slice(0, 5), text: text.slice(0, 5) });
+        return ({ id: text.slice(0, 5), text: text.slice(0, 5) });
       });
       callback(null, data);
     }
@@ -67,6 +67,7 @@ exports.update = (id, text, callback) => {
 
   let fileName = `${id}.txt`;
   let fullPath = path.join(exports.dataDir, fileName);
+
   fs.readFile(fullPath, (err, data) => {
     if (err) {
       callback(new Error(`No item with id: ${id}`));
@@ -75,12 +76,11 @@ exports.update = (id, text, callback) => {
         if (err) {
           callback(new Error(`No item with id: ${id}`));
         } else {
-          callback(null, { id, text});
+          callback(null, { id, text });
         }
       });
     }
   });
-
 
 };
 
